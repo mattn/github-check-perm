@@ -2,6 +2,8 @@
 
 Check permissions on GitHub repository.
 
+![github-check-perm](https://raw.githubusercontent.com/mattn/github-check-perm/main/screenshot.png)
+
 ## Usage
 
 ```
