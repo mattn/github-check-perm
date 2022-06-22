@@ -21,39 +21,6 @@ type config struct {
 	OAuthToken string `yaml:"oauth_token"`
 }
 
-type response struct {
-	Permission string `json:"permission"`
-	RoleName   string `json:"role_name"`
-	User       struct {
-		AvatarURL        string `json:"avatar_url"`
-		EventsURL        string `json:"events_url"`
-		FollowersURL     string `json:"followers_url"`
-		FollowingURL     string `json:"following_url"`
-		GistsURL         string `json:"gists_url"`
-		GravatarID       string `json:"gravatar_id"`
-		HTMLURL          string `json:"html_url"`
-		ID               int64  `json:"id"`
-		Login            string `json:"login"`
-		NodeID           string `json:"node_id"`
-		OrganizationsURL string `json:"organizations_url"`
-		Permissions      struct {
-			Admin    bool `json:"admin"`
-			Maintain bool `json:"maintain"`
-			Pull     bool `json:"pull"`
-			Push     bool `json:"push"`
-			Triage   bool `json:"triage"`
-		} `json:"permissions"`
-		ReceivedEventsURL string `json:"received_events_url"`
-		ReposURL          string `json:"repos_url"`
-		RoleName          string `json:"role_name"`
-		SiteAdmin         bool   `json:"site_admin"`
-		StarredURL        string `json:"starred_url"`
-		SubscriptionsURL  string `json:"subscriptions_url"`
-		Type              string `json:"type"`
-		URL               string `json:"url"`
-	} `json:"user"`
-}
-
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage: %v [user or organization] [repository]\n", os.Args[0])
