@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/user"
 	"path/filepath"
+	"runtime"
 
 	"golang.org/x/oauth2"
 
@@ -16,16 +17,31 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const name = "github-check-perm"
+
+const version = "0.0.1"
+
+var revision = "HEAD"
+
 type config struct {
 	User       string `yaml:"user"`
 	OAuthToken string `yaml:"oauth_token"`
 }
 
 func main() {
+	var showVersion bool
+
+	flag.BoolVar(&showVersion, "V", false, "Print the version")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage: %v [user or organization] [repository]\n", os.Args[0])
+		flag.PrintDefaults()
 	}
 	flag.Parse()
+
+	if showVersion {
+		fmt.Printf("%s %s (rev: %s/%s)\n", name, version, revision, runtime.Version())
+		return
+	}
 	if flag.NArg() != 2 {
 		flag.Usage()
 		os.Exit(2)
