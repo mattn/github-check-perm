@@ -94,7 +94,11 @@ func main() {
 		flag.Arg(1),
 		gc.User)
 	if err != nil {
-		fmt.Printf("You don't have permission for %s/%s: %v\n", flag.Arg(0), flag.Arg(1), err)
+		if err2, ok := err.(*github.ErrorResponse); ok && err2.Response.StatusCode != 404 {
+			fmt.Printf("You don't have permission for %s/%s\n", flag.Arg(0), flag.Arg(1))
+		} else {
+			log.Fatal(err2.Message)
+		}
 	} else {
 		fmt.Printf("You are %s on %s/%s\n", *resp.Permission, flag.Arg(0), flag.Arg(1))
 	}
