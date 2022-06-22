@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -54,6 +55,12 @@ type response struct {
 }
 
 func main() {
+	flag.Parse()
+	if flag.NArg() != 2 {
+		fmt.Fprintf(os.Stderr, "Usage: %v [user or organization] [repository]\n", os.Args[0])
+		os.Exit(2)
+	}
+
 	u, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
@@ -80,12 +87,12 @@ func main() {
 
 	resp, _, err := client.Repositories.GetPermissionLevel(
 		context.Background(),
-		os.Args[1],
-		os.Args[2],
+		flag.Arg(0),
+		flag.Arg(1),
 		gc.User)
 	if err != nil {
-		fmt.Printf("You don't have permission for %s/%s: %v\n", os.Args[1], os.Args[2], err)
+		fmt.Printf("You don't have permission for %s/%s: %v\n", flag.Arg(0), flag.Arg(1), err)
 	} else {
-		fmt.Printf("You are %s on %s/%s\n", *resp.Permission, os.Args[1], os.Args[2])
+		fmt.Printf("You are %s on %s/%s\n", *resp.Permission, flag.Arg(0), flag.Arg(1))
 	}
 }
