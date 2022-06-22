@@ -36,6 +36,9 @@ func main() {
 		log.Fatal(err)
 	}
 	b, err := ioutil.ReadFile(filepath.Join(u.HomeDir, ".config", "hub"))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	var cfg map[string][]config
 
