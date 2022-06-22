@@ -55,9 +55,12 @@ type response struct {
 }
 
 func main() {
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: %v [user or organization] [repository]\n", os.Args[0])
+	}
 	flag.Parse()
 	if flag.NArg() != 2 {
-		fmt.Fprintf(os.Stderr, "Usage: %v [user or organization] [repository]\n", os.Args[0])
+		flag.Usage()
 		os.Exit(2)
 	}
 
